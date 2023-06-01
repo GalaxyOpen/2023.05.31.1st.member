@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:replace="component/config :: config"></th:block>
+</head>
+<body>
+<div th:replace="component/header :: header"></div>
+<div th:replace="component/nav :: nav"></div>
+
+<div id="section">
+  <table class="table table-striped">
+    <tr>
+      <th>id</th>
+      <td th:text="${member.id}"></td>
+    </tr>
+    <tr>
+      <th>memberEmail</th>
+      <td th:text="${member.memberEmail}"></td>
+    </tr>
+    <tr>
+      <th>memberPassword</th>
+      <td th:text="${member.memberPassword}"></td>
+    </tr>
+    <tr>
+      <th>memberName</th>
+      <td th:text="${member.memberName}"></td>
+    </tr>
+    <tr>
+      <th>memberBirth</th>
+      <td th:text="${member.memberBirth}"></td>
+    </tr>
+    <tr>
+      <th>memberMobile</th>
+      <td th:text="${member.memberMobile}"></td>
+    </tr>
+  </table>
+</div>
+<div th:replace="component/footer :: footer"></div>
+<div id="updateArea">
+
+</div>
+</body>
+<script>
+  const update =()=>{
+
+  }
+</script>
+</html>

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <th:block th:replace="component/config :: config"></th:block>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
 <div th:replace="component/header :: header"></div>
@@ -12,9 +12,30 @@
 <form action="/member/login" method="post">
     <input type="text" name="memberEmail" placeholder="Email를 입력하세요">
     <input type="text" name="memberPassword" placeholder="Password를 입력하세요">
-    <input type="submit" value="로그인">
+    <input type="button" value="로그인" onclick="login()">
 </form>
 <a href="/">처음으로 돌아가기</a>
 <div th:replace="component/footer :: footer"></div>
 </body>
+<script>
+    const login = () => {
+        const email = document.querySelector('input[name="memberEmail"]').value;
+        const password = document.querySelector('input[name="memberPassword"]').value;
+        axios({
+            method: "post",
+            url: "/member/login/axios",
+            data: {
+                memberEmail: email,
+                memberPassword: password
+            }
+        }).then(res => {
+            // then : success
+            console.log("res", res);
+        }).catch(err => {
+            // catch : error
+            console.log("err", err);
+        });
+
+    }
+</script>
 </html>

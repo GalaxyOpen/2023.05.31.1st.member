@@ -6,8 +6,21 @@
 </head>
 <body>
 <div th:fragment="nav" id="nav">
-  <h1>I'm nav</h1>
+  <h1>welcome. It's your 1st boot project</h1>
     <p th:text="${session.loginEmail}"></p>
+
+<script th:inline="javascript">
+    const loginArea = document.getElementById("login-area");
+    const loginEmail= [[${session.loginEmail}]];
+    console.log(loginEmail.length);
+
+    if(loginEmail.length !=0){
+        loginArea.innerHTML = "<a href='/myPage' style='color: black;'>"+loginEmail +"님 어서오세요!</a>"+
+            "<a href='/logout'>logout</a>";
+    }else{
+        loginArea.innerHTML = "<a href='/member/login'>Login</a>";
+    }
+</script>
 </div>
 </body>
 </html>

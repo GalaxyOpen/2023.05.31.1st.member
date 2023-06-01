@@ -1,17 +1,19 @@
 package com.example.member.Controller;
 
+
 import com.example.member.DTO.MemberDTO;
 import com.example.member.Service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -47,7 +49,36 @@ public class MemberController {
             session.setAttribute("loginEmail", memberDTO.getMemberEmail());
             return "/memberPages/memberMain";
         }else{
-            return "/index";
+            return "/memberPages/memberLogin";
         }
+    }@GetMapping("/member/{id}")
+    public String findById(@PathVariable Long id, Model model){
+        MemberDTO memberDTO = memberService.findById(id);
+        model.addAttribute("member",memberDTO);
+        return "/memberPages/memberDetail";
     }
+
+    @PostMapping("/member/login/axios")
+    public ResponseEntity loginAxios(@RequestBody MemberDTO memberDTO, HttpSession session) throws Exception{
+        memberService.loginAxios(memberDTO);
+        session.setAttribute("loginEmail", memberDTO.getMemberEmail());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @GetMapping("/member/axios/{id}")
+    public ResponseEntity detailAxios(@PathVariable Long id) throws Exception{
+        MemberDTO memberDTO = memberService.findById(id);
+        return new ResponseEntity<>(memberDTO, HttpStatus.OK);
+    }
+    @DeleteMapping("/member/{id}")
+    public ResponseEntity delete(@PathVariable Long id){
+        memberService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @PutMapping("/member/{id}")
+    public ResponseEntity update(@PathVariable Long id,
+                                @RequestBody MemberDTO memberDTO){
+        memberService.update(id,memberDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

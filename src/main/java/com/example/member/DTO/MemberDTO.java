@@ -7,7 +7,8 @@ import lombok.ToString;
 
 @Getter @Setter
 @ToString
-public class MemberDTO {
+public class
+MemberDTO {
     private Long id;
     private String memberEmail;
     private String memberPassword;
@@ -25,4 +26,8 @@ public class MemberDTO {
         memberDTO.setMemberMobile(memberEntity.getMemberMobile());
         return memberDTO;
     }
+
+
+
+
 }
