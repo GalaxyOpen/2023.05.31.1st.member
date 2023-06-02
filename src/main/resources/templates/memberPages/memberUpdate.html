@@ -6,15 +6,48 @@
 <body>
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
-<div id="section">
-    <h2>정보 수정</h2>
-    <input type="button" value="정보수정" onclick="update()">
-</div>
+<form action="/member/update" method="post"></form>
+    <input type="hidden" name="id" th:value="${member.id}">
+    ID : <input type="text" name="memberEmail" th:value="${member.memberEmail}" readonly>
+    Password : <input type="text" name="memberPassword">
+    이름 : <input type="text" name="memberName" th:value="${member.memberName}">
+    가입일 : <input type="date" name="memberBirth" th:value="${member.memberBirth}">
+    전화번호 : <input type="text" name="memberMobile" th:value="${member.memberMobile}">
+    <input type="button" value="정보수정" onclick="member_update()">
 <div th:replace="component/footer :: footer"></div>
 <div id="updateArea">
 </div>
 </body>
-<script>
-    const
+<script th:inline="javascript">
+const member_update=()=>{
+    const passDB = [[${member.memberPassword}]];
+    const password = document.querySelector('input[name="memberPassword"]').value;
+    const id = document.querySelector('input[name="id"]').value;
+    const email = document.querySelector('input[name="memberEmail"]').value;
+    const name = document.querySelector('input[name="memberName"]').value;
+    const birth = document.querySelector('input[name="memberBirth"]').value;
+    const mobile = document.querySelector('input[name="memberMobile"]').value;
+    if(passDB==password){
+        axios({
+            method:"put",
+            url: "/member/"+id,
+            data: {
+                id: id,
+                memberEmail: email,
+                memberPassword: password,
+                memberName: name,
+                memberBirth: birth,
+                memberMobile: mobile
+            }
+        }).then(res =>{
+            location.href="/member/"+id;
+        }).catch(err=>{
+            alert("회원정보 수정 실패");
+        })
+    }else{
+        alert("비밀번호가 일치하지 않습니다.")
+    }
+
+}
 </script>
 </html>

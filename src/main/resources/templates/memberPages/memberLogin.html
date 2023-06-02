@@ -12,6 +12,9 @@
 <form action="/member/login" method="post">
     <input type="text" name="memberEmail" placeholder="Email를 입력하세요">
     <input type="text" name="memberPassword" placeholder="Password를 입력하세요">
+    <p id="login-result" style="color: red; display: none">
+        이메일 또는 비밀번호가 틀립니다!
+    </p>
     <input type="button" value="로그인" onclick="login()">
 </form>
 <a href="/">처음으로 돌아가기</a>
@@ -31,9 +34,11 @@
         }).then(res => {
             // then : success
             console.log("res", res);
+            location.href="/member/myPage"
         }).catch(err => {
             // catch : error
             console.log("err", err);
+            document.getElementById("login-result").style.display="block";
         });
 
     }

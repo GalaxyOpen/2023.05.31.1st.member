@@ -14,35 +14,27 @@
       <td th:text="${member.id}"></td>
     </tr>
     <tr>
-      <th>memberEmail</th>
+      <th>이메일</th>
       <td th:text="${member.memberEmail}"></td>
     </tr>
     <tr>
-      <th>memberPassword</th>
+      <th>비밀번호</th>
       <td th:text="${member.memberPassword}"></td>
     </tr>
     <tr>
-      <th>memberName</th>
+      <th>이름</th>
       <td th:text="${member.memberName}"></td>
     </tr>
     <tr>
-      <th>memberBirth</th>
+      <th>가입일</th>
       <td th:text="${member.memberBirth}"></td>
     </tr>
     <tr>
-      <th>memberMobile</th>
+      <th>전화번호</th>
       <td th:text="${member.memberMobile}"></td>
     </tr>
   </table>
 </div>
 <div th:replace="component/footer :: footer"></div>
-<div id="updateArea">
-
-</div>
 </body>
-<script>
-  const update =()=>{
-
-  }
-</script>
 </html>
