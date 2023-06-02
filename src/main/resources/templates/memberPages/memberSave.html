@@ -10,7 +10,14 @@
 
 <form action="/member/save" method="post">
     <input type="text" name="memberEmail" placeholder="이메일" id="member-email" onblur="email_check()"> <br>
-    <p id="check-result"></p>
+    <p id="check-result">
+        <span id="good" style="color: green; display: none">
+            사용가능한 이메일입니다.
+        </span>
+        <span id="bad" style="color: red; display: none">
+            다른 걸 생각해보세요.
+        </span>
+    </p>
     <input type="text" name="memberPassword" placeholder="비밀번호"> <br>
     <input type="text" name="memberName" placeholder="이름"> <br>
     <input type="date" name="memberBirth"> <br>
@@ -19,5 +26,28 @@
 </form>
 <div th:replace="component/footer :: footer"></div>
 </body>
+<script th:inline="javascript">
+    const email_check=()=> {
+        document.querySelector("#good").style.display="none";
+        document.querySelector("#bad").style.display="none";
+        const email = document.querySelector("#member-email").value;
+            axios({
+                method: "post",
+                url: "/member/dup-check",
+                data: {
+                    memberEmail: email
+                }
+            }).then(res=>{
+                //중복되지 않은 경우
+               console.log("then");
+               document.querySelector("#good").style.display="block";
 
+            }).catch(err=>{
+                // 중복된 경우
+                console.log("catch")
+                document.querySelector("#bad").style.display="block";
+            });
+
+    }
+</script>
 </html>
