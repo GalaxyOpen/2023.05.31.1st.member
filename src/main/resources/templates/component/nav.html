@@ -7,7 +7,24 @@
 <body>
 <div th:fragment="nav" id="nav">
   <h1>welcome. It's your 1st boot project</h1>
-    <p th:text="${session.loginEmail}"></p>
+    <ul>
+        <li>
+            <a href="/">
+                <i class="bi bi-house"></i>
+            </a>
+        </li>
+        <li>
+            <a href="/member/save">회원가입</a>
+        </li>
+        <li>
+            <a href="/member/login">로그인</a>
+        </li>
+        <li>
+            <a href="/member/">회원목록</a>
+        </li>
+        <li class="login-name" id="login-area">
+        </li>
+    </ul>
 
 <script th:inline="javascript">
     const loginArea = document.getElementById("login-area");
@@ -15,8 +32,8 @@
     console.log(loginEmail.length);
 
     if(loginEmail.length !=0){
-        loginArea.innerHTML = "<a href='/myPage' style='color: black;'>"+loginEmail +"님 어서오세요!</a>"+
-            "<a href='/logout'>logout</a>";
+        loginArea.innerHTML = "<a href='/member/myPage' style='color: black;'>"+loginEmail +"님 어서오세요!</a>"+
+            "<a href='/member/logout'>logout</a>";
     }else{
         loginArea.innerHTML = "<a href='/member/login'>Login</a>";
     }
