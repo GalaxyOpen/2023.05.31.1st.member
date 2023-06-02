@@ -59,6 +59,14 @@ public class MemberController {
         session.setAttribute("loginEmail", memberDTO.getMemberEmail());
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @GetMapping("/member/logout")
+    public String logout(HttpSession session) {
+        // 세션에 담긴 값 전체 삭제
+//        session.invalidate();
+        // 특정 파라미터만 삭제
+        session.removeAttribute("loginEmail");
+        return "redirect:/";
+    }
 
     @GetMapping("/member/myPage")
     public String myPage(){
