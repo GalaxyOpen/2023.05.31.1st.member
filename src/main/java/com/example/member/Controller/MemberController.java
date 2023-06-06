@@ -39,15 +39,27 @@ public class MemberController {
         return "/memberPages/memberList";
     }
     @GetMapping("/member/login")
-    public String loginForm(){
+    public String loginForm(@RequestParam(value="redirectURI", defaultValue = "/member/myPage") String redirectURI,
+                            Model model){
+        // 위에서 value=redirectURI는 LoginCheckInterceptor의 리데이렉트URI를 받기위해 쓴 것이다.
+
+        model.addAttribute("redirectURI", redirectURI);
+
+
         return "/memberPages/memberLogin";
     }
     @PostMapping("member/login")
-    public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session){
+    public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session,
+                        @RequestParam("redirectURI") String redirectURI){
         boolean memberLoginResult = memberService.login(memberDTO);
         if(memberLoginResult){
             session.setAttribute("loginEmail", memberDTO.getMemberEmail());
-            return "/memberPages/memberMain";
+//            return "/memberPages/memberMain";
+
+            //로그인 성공하면 사용자가 직전에 요청한 주소로 redirect
+            // 인터셉터에 걸리지 않고 처음부터 로그인하는 사용자였다면
+            // redirect:/member/myPage 로 요청되며, memberMain 화면으로 전환됨.
+            return "redirect:"+redirectURI;
         }else{
             return "/memberPages/memberLogin";
         }
@@ -62,7 +74,9 @@ public class MemberController {
     @GetMapping("/member/logout")
     public String logout(HttpSession session) {
         // 세션에 담긴 값 전체 삭제
-//        session.invalidate();
+//     List<ArticleDTO> searchByContent(Map<String, Object> contentMap) {
+//        return sql.selectList("Article.searchByContent", contentMap);
+//    }   session.invalidate();
         // 특정 파라미터만 삭제
         session.removeAttribute("loginEmail");
         return "redirect:/";
@@ -79,6 +93,7 @@ public class MemberController {
 //        model.addAttribute("member",memberDTO);
 //        return "/memberPages/memberDetail";
 //    }
+
 
 
 

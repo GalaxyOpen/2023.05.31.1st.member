@@ -10,6 +10,7 @@
 
 
 <form action="/member/login" method="post">
+    <input type="hidden" name="redirectURI" th:value="${redirectURI}">
     <input type="text" name="memberEmail" placeholder="Email를 입력하세요">
     <input type="text" name="memberPassword" placeholder="Password를 입력하세요">
     <p id="login-result" style="color: red; display: none">
@@ -24,6 +25,7 @@
     const login = () => {
         const email = document.querySelector('input[name="memberEmail"]').value;
         const password = document.querySelector('input[name="memberPassword"]').value;
+        const redirectURI = document.querySelector('input[name="redirectURI"]').value;
         axios({
             method: "post",
             url: "/member/login/axios",
@@ -34,7 +36,8 @@
         }).then(res => {
             // then : success
             console.log("res", res);
-            location.href="/member/myPage"
+            // location.href="/member/myPage"
+            location.href=redirectURI;
         }).catch(err => {
             // catch : error
             console.log("err", err);
